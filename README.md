@@ -1,4 +1,13 @@
 StickySections
 ==============
 
-Sticky iOS-style Section Headers for a flat list
+iOS-style Sticky Section Headers for a flat list
+
+Options
+--------------
+
+HTML
+--------------
+
+CSS
+--------------
