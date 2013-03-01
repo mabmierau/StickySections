@@ -51,13 +51,13 @@ table {
 
 /* scrollable list css */
 .wrapper {
-  height: 400px;
+  height: 200px;
   width: 300px;
   overflow: hidden;
   position: relative;
 }
 
-.inane_list {
+.scrollable_list {
   height: 100%;
   overflow: auto;
 }
@@ -71,12 +71,52 @@ table {
 /* stylin' */
 body {
   font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
+  width: 900px;
+  margin: 0 auto;
+}
+
+code {
+  font-family: Courier, monospace;
+}
+
+h1 {
+  font-size: 2em;
+  text-align: center;
+  padding: 20px;
+}
+
+p {
+  line-height: 1.25em;
+}
+
+.example {
+  margin-top: 20px;
+}
+
+.example p {
+  width: 400px;
 }
 
 .wrapper {
   border: solid 1px lightgrey;
+  margin: 20px 0;
 }
 
-.inane_list li.section {
+.inane_list li.section, .div_list .section, .header {
   background: rgba(173, 216, 230, 0.75);
+}
+.inane_list li.section, .div_list .section, .header th {
+  padding: 4px 0;
+}
+
+table {
+  width: 100%;
+}
+
+table th, table td {
+  width: 150px;
+}
+
+.col_2 {
+  float: right;
 }

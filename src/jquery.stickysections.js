@@ -9,7 +9,8 @@
 
     var pluginName = 'stickySections',
         defaults = {
-            sectionSelector: '.section'
+            sectionSelector: '.section',
+            placeholder: null
         };
 
     function Plugin( element, options ) {
@@ -33,10 +34,10 @@
 
           var sections = el.find(options.sectionSelector);
 
-          var lastSection = null;
+          var lastSection = null; // last section with negative top
           var lastTop = null;
-          var nextTop = null;
           var top = null;
+          var nextTop = Number.MAX_VALUE;
 
           sections.each(function(i,section) {
             section = $(section);
@@ -56,19 +57,29 @@
             if (top < 0) {
               lastSection = section;
               lastTop = top;
+              if (nextSection = sections[i+1]) {
+                nextTop = $(nextSection).position().top;
+              }
+              else {
+                nextTop = Number.MAX_VALUE;
+              }
             }
           });
 
           el.find('.sticky_placeholder').remove();
-          if (lastSection && lastSection.next(options.sectionSelector)) {
+          if (lastSection
+              && lastSection.next(options.sectionSelector).length == 0) {
+              // check that the next element isn't also a section.
+              // If so, it will do the right thing (get pushed up by the next section)
+              // if it goes back into the layout when we remove .sticky
+
             lastSection.addClass('sticky');
             sections.not(lastSection).removeClass('sticky');
+            // removing from all first then adding to last causes a flicker
 
-            lastSection.after('<li class="sticky_placeholder"></li>');
-            nextTop = 1000;
-            if ((nextSection = lastSection.nextAll(options.sectionSelector+':first')).length > 0) {
-              nextTop = nextSection.position().top;
-            }
+            placeholder = $(options.placeholder || ('<'+lastSection.prop('tagName')+'></'+lastSection.prop('tagName')+'>'));
+            placeholder.addClass('sticky_placeholder');
+            lastSection.after(placeholder);
 
             lastSection.css({
               top: (nextTop < lastSection.outerHeight() ? (nextTop - lastSection.outerHeight()) : 0)+'px'
